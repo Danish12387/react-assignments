@@ -1,18 +1,42 @@
 import FbImageLibrary from 'react-fb-image-grid';
-import './index.css'
+import './index.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import '../../css/all.min.css';
 import '../../css/fontawesome.min.css';
+import likeIcon from '../../like.png';
+import likedIcon from '../../liked.png';
+import comment from '../../chat.png';
+import share from '../../share.png';
+import upperLike from '../../Upper-like.png';
+import heart from '../../heart.png';
+import care from '../../care.png';
+import haha from '../../haha.png';
+import wow from '../../wow.png';
+import sad from '../../fear.png';
+import angry from '../../angry.png';
 
 function FBfeed(props) {
     const [like, setLike] = useState(false);
+    const [isHoverd, setIsHoverd] = useState(false);
+    const [isClicked, setIsClicked] = useState(false);
+    const [saveImg, setSaveImg] = useState(null);
+    const [saveImgName, setSaveImgName] = useState(null);
 
+    function handleChange(src, name) {
+        setSaveImg(src);
+        setSaveImgName(name);
+    }
+
+    function inputHandle() {
+        setIsClicked(!isClicked);
+    }
+ 
+    // const imgSrc = !like ? {likeIcon} : 'https://w7.pngwing.com/pngs/725/689/png-transparent-thumb-signal-computer-icons-facebook-like-button-vote-miscellaneous-text-rectangle.png';
     return (
         <div>
             <div className='main_div'>
                 <div>
-
                     <div className='title_div'>
                         <img src={props.img} className='logo_img' />
                         <h4 className='neither title'>{props.title}</h4>
@@ -25,14 +49,45 @@ function FBfeed(props) {
                 </div>
                 <div className='bottom_div'>
                     {/* <FontAwesomeIcon icon="fa-light fa-thumbs-up" /> */}
-                    <button onClick={()=> setLike(!like)} className={like ? 'liked' : ''}><i class="fa-light fa-thumbs-up"></i> Like</button>
-                    <button><i class="fa-light fa-comment"></i> Comment</button>
-                    <button><i class="fa-light fa-share"></i> Share</button>
+                    <div className={`icons_div ${isHoverd ? 'top' : ''}`}
+                    onMouseEnter={()=> setIsHoverd(true)}
+                    onMouseLeave={()=> setIsHoverd(false)}
+                    >
+                        {/* <div>
+                        <span className={`${isHoverd2 ? 'display_block' : 'like'}`}>Like</span>
+                        </div> */}
+                        <img className='icons' src={upperLike} onClick={()=>handleChange(upperLike, 'Like')} />
+                        <img className='icons' src={heart} onClick={()=>handleChange(heart, 'heart')} />
+                        <img src={care} onClick={()=>handleChange(care, 'care')} />
+                        <img src={haha} onClick={()=>handleChange(haha, 'haha')} />
+                        <img src={wow}  onClick={()=>handleChange(wow, 'wow')}/>
+                        <img src={sad}  onClick={()=>handleChange(sad, 'sad')}/>
+                        <img src={angry} onClick={()=>handleChange(angry, 'angry')} />
+                        
+                    </div>
+                    <button onClick={()=> {
+                        setLike(!like)
+                        setSaveImg(null)
+                        setSaveImgName(null)
+                    }} className={like ? 'liked' : ''}
+                    onMouseEnter={()=> setIsHoverd(true)}
+                    onMouseLeave={()=> setIsHoverd(false)}
+                    >
+                    {
+                    !like?
+                    (<img className={`like_img ${saveImg ? 'new_liked' : ''}`}  src={saveImg ? saveImg : likeIcon}/>)
+                    :
+                    (<img className={`like_img ${saveImg ? 'new_liked' : 'liked_img'}`} src={saveImg ? saveImg : likedIcon}/>)
+                    }
+                    {saveImgName ? saveImgName : (!like ? 'Like' : 'Liked')}
+                    </button>
+                    <button><img className='like_img'  src={comment}/> Comment</button>
+                    <button><img className='like_img'  src={share}/> Share</button>
                 </div>
 
                 <div className='comment_div'>
                 <img src={props.img} className='logo_img' />
-                <input placeholder='Write a public comment...'/>
+                <input placeholder='Write a public comment...' onChange={inputHandle} className={isClicked ? 'cliked_input' : ''}/>
                 </div>
             </div>
         </div>
