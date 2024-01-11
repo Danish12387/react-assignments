@@ -2,8 +2,7 @@ import FbImageLibrary from 'react-fb-image-grid';
 import './index.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
-import '../../css/all.min.css';
-import '../../css/fontawesome.min.css';
+
 import likeIcon from '../../like.png';
 import likedIcon from '../../liked.png';
 import comment from '../../chat.png';
@@ -31,21 +30,22 @@ function FBfeed(props) {
     function inputHandle() {
         setIsClicked(!isClicked);
     }
+
+    const {title, description, image, img} = props
  
-    // const imgSrc = !like ? {likeIcon} : 'https://w7.pngwing.com/pngs/725/689/png-transparent-thumb-signal-computer-icons-facebook-like-button-vote-miscellaneous-text-rectangle.png';
     return (
         <div>
             <div className='main_div'>
                 <div>
                     <div className='title_div'>
-                        <img src={props.img} className='logo_img' />
-                        <h4 className='neither title'>{props.title}</h4>
+                        <img src={img} className='logo_img' />
+                        <h4 className='neither title'>{title}</h4>
                     </div>
-                    <h4 className='neither description'>{props.description}.</h4>
+                    <h4 className='neither description'>{description}.</h4>
                 </div>
 
                 <div className='img_library'>
-                    <FbImageLibrary images={props.image} />
+                    <FbImageLibrary images={image} />
                 </div>
                 <div className='bottom_div'>
                     {/* <FontAwesomeIcon icon="fa-light fa-thumbs-up" /> */}
@@ -53,9 +53,6 @@ function FBfeed(props) {
                     onMouseEnter={()=> setIsHoverd(true)}
                     onMouseLeave={()=> setIsHoverd(false)}
                     >
-                        {/* <div>
-                        <span className={`${isHoverd2 ? 'display_block' : 'like'}`}>Like</span>
-                        </div> */}
                         <img className='icons' src={upperLike} onClick={()=>handleChange(upperLike, 'Like')} />
                         <img className='icons' src={heart} onClick={()=>handleChange(heart, 'heart')} />
                         <img src={care} onClick={()=>handleChange(care, 'care')} />
@@ -86,7 +83,7 @@ function FBfeed(props) {
                 </div>
 
                 <div className='comment_div'>
-                <img src={props.img} className='logo_img' />
+                <img src={img} className='logo_img' />
                 <input placeholder='Write a public comment...' onChange={inputHandle} className={isClicked ? 'cliked_input' : ''}/>
                 </div>
             </div>

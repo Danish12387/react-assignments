@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react';
 import './App.css';
-import FBfeed from './components/Images/index';
+import FBfeed from './components/post/index';
+import Navbar from './components/Navbar/index';
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -21,6 +22,7 @@ function App() {
 
   return (
     <div className="App">
+            <Navbar/>
       {
         products.map((item)=>{
           return <FBfeed image={item.images} title={item.title} description={item.description} img={item.thumbnail}/> 
